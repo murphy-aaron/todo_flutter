@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_flutter/model/task_data.dart';
+
+import '../model/task.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({required this.addTask});
+  const AddTaskScreen({super.key});
 
-  final void Function(String) addTask;
+  // final void Function(String) addTask;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +52,10 @@ class AddTaskScreen extends StatelessWidget {
             width: 200.0,
             child: TextButton(
               onPressed: () {
-                addTask(taskTitle);
+                if (taskTitle != '') {
+                  final newTask = Task(name: taskTitle);
+                  Provider.of<TaskData>(context, listen: false).addTask(newTask);
+                }
                 Navigator.pop(context);
               },
               style: TextButton.styleFrom(
